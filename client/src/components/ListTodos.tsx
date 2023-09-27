@@ -1,15 +1,13 @@
-import { useState, useEffect } from "react";
-
+import { useEffect } from "react";
 import EditTodo from "./EditTodo";
+import { Todo } from "./types/TodoProps";
 
-type Todo = {
-  todo_id: number;
-  description: string;
+type ListTodoProps = {
+  todos: Todo[];
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
-function ListTodos() {
-  const [todos, setTodos] = useState([]);
-
+function ListTodos({ todos, setTodos }: ListTodoProps) {
   async function getTodos() {
     try {
       const response = await fetch("http://localhost:3000/todos");
@@ -49,18 +47,17 @@ function ListTodos() {
     <>
       <ul role="list" className="w-1/2 divide-y divide-gray-100">
         {todos.map((todo: Todo) => (
-          <li key={todo.todo_id} className="flex justify-between py-6">
+          <li
+            key={todo.todo_id}
+            className="flex justify-between items-center py-6"
+          >
             <p className="text-sm font-semibold text-gray-900">
               {todo.description}
             </p>
-            <div className="flex ">
-              <button className="px-1 text-gray-500">
-                <EditTodo />
-              </button>
-              <button
-                onClick={() => deleteTodo(todo.todo_id)}
-                className="px-1 text-gray-500"
-              >
+            <div>
+              <EditTodo todo={todo} />
+
+              <button onClick={() => deleteTodo(todo.todo_id)} className="btn">
                 Delete
               </button>
             </div>

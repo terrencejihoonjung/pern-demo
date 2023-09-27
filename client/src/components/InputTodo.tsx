@@ -3,10 +3,6 @@ import { useState } from "react";
 function InputTodo() {
   const [description, setDescription] = useState("");
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setDescription(e.target.value);
-  }
-
   async function handleSubmit(
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> {
@@ -45,7 +41,7 @@ function InputTodo() {
           <input
             type="text"
             value={description}
-            onChange={(e) => handleInputChange(e)}
+            onChange={(e) => setDescription(e.target.value)}
             name="todo"
             id="todo-input"
             className="w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
