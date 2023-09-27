@@ -14,7 +14,7 @@ function InputTodo() {
 
     try {
       const body = { description };
-      const response = await fetch("http://localhost:3000/todos", {
+      const response = fetch("http://localhost:3000/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,6 +23,7 @@ function InputTodo() {
       });
 
       setDescription("");
+      window.location.reload();
       console.log(response);
     } catch (err) {
       if (err instanceof Error) {
