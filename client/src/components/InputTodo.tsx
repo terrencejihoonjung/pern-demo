@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-function InputTodo() {
+type inputTodoProps = {
+  setWarning: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function InputTodo({ setWarning }: inputTodoProps) {
   const [description, setDescription] = useState("");
 
   async function handleSubmit(
@@ -9,6 +13,11 @@ function InputTodo() {
     e.preventDefault();
 
     try {
+      if (description === "") {
+        setWarning(true);
+        throw Error("Input is Empty");
+      }
+      setWarning(false);
       const body = { description };
       const response = fetch("http://localhost:3000/todos", {
         method: "POST",
@@ -32,7 +41,7 @@ function InputTodo() {
 
   return (
     <>
-      <h1 className="text-4xl mt-5">Pern Todo List</h1>
+      <h1 className="text-4xl mt-5">PERN Todo List</h1>
       <form className="w-1/2 mt-5" onSubmit={(e) => handleSubmit(e)}>
         <label className="text-sm font-medium leading-6 text-gray-900">
           Create a Todo
